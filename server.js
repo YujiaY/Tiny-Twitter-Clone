@@ -5,24 +5,24 @@ const mongoose = require('mongoose'); //
 const hbs = require('hbs');
 const expressHbs = require('express-handlebars');
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+// const MongoStore = require('connect-mongo')(session);
 const flash = require('express-flash');
 const passport = require('passport');
 const passportSocketIo = require('passport.socketio');
 const cookieParser = require('cookie-parser');
-const config = require('./config/secret');
+// const config = require('./config/secret');
 
 const app = express(); // creating an instance of express library
 
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-const sessionStore = new MongoStore({})
+// const sessionStore = new MongoStore({})
 
-mongoose.connect(config.database, function(err) {
+/* mongoose.connect(config.database, function(err) {
     if(err) console.log(err);
     console.log("Connected to database");
-})
+}) */
 
 // Set up which template engine will be used in this app with app.engine
 app.engine('.hbs', expressHbs({
@@ -49,3 +49,23 @@ if (app.get('env') === 'production') {
 
 */
 
+app.use(bodyParser.json());
+// So, I can read json data types. By adding bodyParser, I am ensuring my server handles incoming requests through the express middleware. So, now parsing the body of incoming requests is part of the procedure that my middleware takes when handling incoming requests -- all because I called app.use(bodyParser).
+
+app.use(bodyParser.urlencoded({extended: true}));  // https://www.npmjs.com/package/body-parser#bodyparserurlencodedoptions - Returns middleware that only parses urlencoded bodies and only looks at requests where the Content-Type header matches the type option. The extended option allows to choose between parsing the URL-encoded data with the querystring library (when false) or the qs library (when true). The "extended" syntax allows for rich objects and arrays to be encoded into the URL-encoded format, allowing for a JSON-like experience with URL-encoded.
+
+
+// provides me the API to work with sessions (get & set data to session), but under the hood, it will save and retrieve using cookie
+/* app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    secret: config.secret,
+    store: sessionStore
+})); */
+
+const mainRoutes = require('./routes/main');
+
+app.listen(3030, (err) => {
+    if(err) console.log(err);
+    console.log(`Running on port ${3030}`);
+});
