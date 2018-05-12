@@ -65,6 +65,8 @@ app.use(bodyParser.urlencoded({extended: true}));  // https://www.npmjs.com/pack
 
 const mainRoutes = require('./routes/main');
 
+app.use(mainRoutes);
+
 app.listen(3030, (err) => {
     if(err) console.log(err);
     console.log(`Running on port ${3030}`);
