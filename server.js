@@ -10,7 +10,7 @@ const flash = require('express-flash');
 const passport = require('passport');
 const passportSocketIo = require('passport.socketio');
 const cookieParser = require('cookie-parser');
-const config = require('./config/secret');
+const config = require('./config/secret'); // This is where I will save MLab's credentials.
 
 const app = express(); // creating an instance of express library
 
@@ -22,11 +22,11 @@ const io = require('socket.io')(http);
 
 // const sessionStore = new MongoStore({})
 
-// Am not using ES6 arrows with mongoose, as it has some problems with it.
+// Am not using ES6 arrows with mongoose, as it has some problems with it. This config.database is going into my config file and accessing the database property
 mongoose.connect(config.database, function(err) {
     if(err) console.log(err);
     console.log("Connected to database");
-})
+});
 
 // Set up which template engine will be used in this app with app.engine
 app.engine('.hbs', expressHbs({
