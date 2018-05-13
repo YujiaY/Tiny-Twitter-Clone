@@ -10,7 +10,7 @@ const flash = require('express-flash');
 const passport = require('passport');
 const passportSocketIo = require('passport.socketio');
 const cookieParser = require('cookie-parser');
-const config = require('./config/secret'); // This is where I will save MLab's credentials.
+const config = require('./config/secret'); // This is where I will save mLab's credentials.
 
 const app = express(); // creating an instance of express library
 
