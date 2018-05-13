@@ -10,19 +10,23 @@ const flash = require('express-flash');
 const passport = require('passport');
 const passportSocketIo = require('passport.socketio');
 const cookieParser = require('cookie-parser');
-// const config = require('./config/secret');
+const config = require('./config/secret');
 
 const app = express(); // creating an instance of express library
+
+// MLab tinty-twitter
+// mongodb://<dbuser>:<dbpassword>@ds221990.mlab.com:21990/tiny-twitter
 
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 // const sessionStore = new MongoStore({})
 
-/* mongoose.connect(config.database, function(err) {
+// Am not using ES6 arrows with mongoose, as it has some problems with it.
+mongoose.connect(config.database, function(err) {
     if(err) console.log(err);
     console.log("Connected to database");
-}) */
+})
 
 // Set up which template engine will be used in this app with app.engine
 app.engine('.hbs', expressHbs({
